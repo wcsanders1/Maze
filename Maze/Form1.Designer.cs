@@ -33,11 +33,11 @@
             this.num_lines = new System.Windows.Forms.Label();
             this.angle = new System.Windows.Forms.Label();
             this.length = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.increment_label = new System.Windows.Forms.Label();
             this.num_lines_txt = new System.Windows.Forms.TextBox();
             this.angle_txt = new System.Windows.Forms.TextBox();
             this.length_txt = new System.Windows.Forms.TextBox();
-            this.txt4 = new System.Windows.Forms.TextBox();
+            this.increment_txt = new System.Windows.Forms.TextBox();
             this.go_button = new System.Windows.Forms.Button();
             this.control_panel.SuspendLayout();
             this.SuspendLayout();
@@ -46,11 +46,11 @@
             // 
             this.control_panel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.control_panel.Controls.Add(this.go_button);
-            this.control_panel.Controls.Add(this.txt4);
+            this.control_panel.Controls.Add(this.increment_txt);
             this.control_panel.Controls.Add(this.length_txt);
             this.control_panel.Controls.Add(this.angle_txt);
             this.control_panel.Controls.Add(this.num_lines_txt);
-            this.control_panel.Controls.Add(this.label1);
+            this.control_panel.Controls.Add(this.increment_label);
             this.control_panel.Controls.Add(this.length);
             this.control_panel.Controls.Add(this.angle);
             this.control_panel.Controls.Add(this.num_lines);
@@ -69,6 +69,7 @@
             this.canvas.Name = "canvas";
             this.canvas.Size = new System.Drawing.Size(1097, 414);
             this.canvas.TabIndex = 1;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
             // num_lines
             // 
@@ -103,16 +104,16 @@
             this.length.TabIndex = 2;
             this.length.Text = "Length";
             // 
-            // label1
+            // increment_label
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(611, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 25);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Number of Lines";
+            this.increment_label.AutoSize = true;
+            this.increment_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.increment_label.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.increment_label.Location = new System.Drawing.Point(611, 31);
+            this.increment_label.Name = "increment_label";
+            this.increment_label.Size = new System.Drawing.Size(98, 25);
+            this.increment_label.TabIndex = 3;
+            this.increment_label.Text = "Increment";
             // 
             // num_lines_txt
             // 
@@ -138,13 +139,13 @@
             this.length_txt.TabIndex = 6;
             this.length_txt.Text = "5";
             // 
-            // txt4
+            // increment_txt
             // 
-            this.txt4.Location = new System.Drawing.Point(771, 31);
-            this.txt4.Name = "txt4";
-            this.txt4.Size = new System.Drawing.Size(45, 22);
-            this.txt4.TabIndex = 7;
-            this.txt4.Text = "1";
+            this.increment_txt.Location = new System.Drawing.Point(771, 31);
+            this.increment_txt.Name = "increment_txt";
+            this.increment_txt.Size = new System.Drawing.Size(45, 22);
+            this.increment_txt.TabIndex = 7;
+            this.increment_txt.Text = "1";
             // 
             // go_button
             // 
@@ -154,6 +155,7 @@
             this.go_button.TabIndex = 8;
             this.go_button.Text = "Go";
             this.go_button.UseVisualStyleBackColor = true;
+            this.go_button.Click += new System.EventHandler(this.go_button_Click);
             // 
             // Maze
             // 
@@ -178,11 +180,11 @@
         private System.Windows.Forms.Label num_lines;
         private System.Windows.Forms.Panel canvas;
         private System.Windows.Forms.Button go_button;
-        private System.Windows.Forms.TextBox txt4;
+        private System.Windows.Forms.TextBox increment_txt;
         private System.Windows.Forms.TextBox length_txt;
         private System.Windows.Forms.TextBox angle_txt;
         private System.Windows.Forms.TextBox num_lines_txt;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label increment_label;
         private System.Windows.Forms.Label length;
     }
 }
