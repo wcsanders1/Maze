@@ -39,6 +39,7 @@ namespace Maze
             MazePlatform.CreateMazePlatform();
             MazePlatform.InitializeMazeStatus();
             MazePlatform.CreateMazeBorders();
+            MazePlatform.CreateMazeSolution();
 
 
             //start_x = canvas.Width / 2;    // to get to middle of canvas
@@ -106,6 +107,9 @@ namespace Maze
             //start_x = canvas.Width / 2;
             //start_y = canvas.Height / 2;
 
+            MazePlatform.InitializeMazeStatus();
+            MazePlatform.CreateMazeBorders();
+            MazePlatform.CreateMazeSolution();
             canvas.Refresh();
         }
     }
