@@ -45,7 +45,7 @@ namespace Maze
             {
                 for (int y = 0; y < 200; y++)
                 {
-                    if (MazePlatform.status[x, y] == MazePlatform.CLOSED)
+                    if (MazePlatform.status[x, y] == MazePlatform.TRAIL || MazePlatform.status[x, y] == MazePlatform.BORDER)
                     {
                         g.FillRectangle(myBrush, MazePlatform.mazeX[x], MazePlatform.mazeY[y], 1, 1);
                     }

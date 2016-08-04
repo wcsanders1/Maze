@@ -12,8 +12,11 @@ namespace Maze
         public static int[] mazeY = new int[200];
         public static int[,] status = new int[200, 200];
 
-        public const int CLOSED = 1;
-        public const int OPEN = 2;
+        public const int OPEN = 1;
+        public const int TRAIL = 2;
+        public const int BORDER = 3;
+
+        public const int NO_TRAIL_IN_WAY = 999999;
 
         public const int UP = 1;
         public const int DOWN = 2;
@@ -51,13 +54,13 @@ namespace Maze
         {
             for (int x = 0; x < 200; x++)
             {
-                status[x, 0] = CLOSED;    //closes bottom border
-                status[x, 199] = CLOSED;  //closes top border
+                status[x, 0] = BORDER;    //closes bottom border
+                status[x, 199] = BORDER;  //closes top border
             }
             for (int y = 0; y < 200; y++)
             {
-                status[0, y] = CLOSED;    //closes left border
-                status[199, y] = CLOSED;  //closes right border
+                status[0, y] = BORDER;    //closes left border
+                status[199, y] = BORDER;  //closes right border
             }
         }
     }

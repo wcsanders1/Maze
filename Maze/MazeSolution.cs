@@ -8,17 +8,17 @@ namespace Maze
 {
     class MazeSolution : MazeTrails             //This class should create the maze solution and do other things, like display it on demand
     {                                           //This class can inherit from the MazeTrails class because it's a trail, except it's the lone solution
-        //public MazeSolution() : base()
-        //{ }
+                                                //public MazeSolution() : base()
+                                                //{ }        
 
         public static void CreateMazeSolution()
         {
             Random rnd = new Random();
-            int yPoint = rnd.Next(0, 200);
-            int xPoint = 0;
+            int yPoint = rnd.Next(10, 190);
+            int xPoint = 1;
             int curveBreaks = 25;
 
-            for (int curves = 1; curves <= curveBreaks; curves++)  
+            for (int curves = 1; curves <= curveBreaks; curves++)
             {
                 if (curves == 1)                     //first direction of solution is always to the right
                 {
@@ -34,28 +34,21 @@ namespace Maze
 
                     if (direction == MazePlatform.DOWN)
                     {
-                        bool fullDown = true;
+                        bool goDown = false;
+                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
 
-                        for (int i = 1; i <= curveLength; i++)   // test to see whether going down will run into a border or itself, and if so only make trail within 5 px of the closed px
+                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            if (MazePlatform.status[xPoint, yPoint + i] == MazePlatform.CLOSED)
-                            {
-                                fullDown = false;
-
-                                if (i <= 20)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    curveLength = i - 5;
-                                    MazeTrails.createTrail(xPoint, yPoint, MazePlatform.DOWN, curveLength);
-                                    yPoint += curveLength;
-                                    break;
-                                }
-                            }
+                            goDown = true;
                         }
-                        if (fullDown)
+
+                        if (distanceToBorder < curveLength)
+                        {
+                            curveLength = distanceToBorder - 20;
+                            if (curveLength < 10) { goDown = false; }
+                        }
+                        
+                        if (goDown)
                         {
                             MazeTrails.createTrail(xPoint, yPoint, MazePlatform.DOWN, curveLength);
                             yPoint += curveLength;
@@ -63,28 +56,21 @@ namespace Maze
                     }
                     else if (direction == MazePlatform.UP)
                     {
-                        bool fullUp = true;
+                        bool goUp = false;
+                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.UP);
 
-                        for (int i = 1; i <= curveLength; i++)
+                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.UP) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            if (MazePlatform.status[xPoint, yPoint - i] == MazePlatform.CLOSED)
-                            {
-                                fullUp = false;
-
-                                if (i <= 20)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    curveLength = i - 5;
-                                    MazeTrails.createTrail(xPoint, yPoint, MazePlatform.UP, curveLength);
-                                    yPoint -= curveLength;
-                                    break;
-                                }
-                            }
+                            goUp = true;
                         }
-                        if (fullUp)
+
+                        if (distanceToBorder < curveLength)
+                        {
+                            curveLength = distanceToBorder - 20;
+                            if (curveLength < 10) { goUp = false; }
+                        }
+
+                        if (goUp)
                         {
                             MazeTrails.createTrail(xPoint, yPoint, MazePlatform.UP, curveLength);
                             yPoint -= curveLength;
@@ -98,28 +84,21 @@ namespace Maze
 
                     if (direction == MazePlatform.LEFT)
                     {
-                        bool fullLeft = true;
+                        bool goLeft = false;
+                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
 
-                        for (int i = 1; i <= curveLength; i++)
+                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            if (MazePlatform.status[xPoint - i, yPoint] == MazePlatform.CLOSED)
-                            {
-                                fullLeft = false;
-
-                                if (i <= 20)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    curveLength = i - 5;
-                                    MazeTrails.createTrail(xPoint, yPoint, MazePlatform.LEFT, curveLength);
-                                    xPoint -= curveLength;
-                                    break;
-                                }
-                            }
+                            goLeft = true;
                         }
-                        if (fullLeft)
+
+                        if (distanceToBorder < curveLength)
+                        {
+                            curveLength = distanceToBorder - 20;
+                            if (curveLength < 10) { goLeft = false; }
+                        }
+
+                        if (goLeft)
                         {
                             MazeTrails.createTrail(xPoint, yPoint, MazePlatform.LEFT, curveLength);
                             xPoint -= curveLength;
@@ -127,35 +106,28 @@ namespace Maze
                     }
                     else if (direction == MazePlatform.RIGHT)
                     {
-                        bool fullRight = true;
+                        bool goRight = false;
+                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
 
-                        for (int i = 1; i <= curveLength; i++)
+                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.RIGHT) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            if (MazePlatform.status[xPoint + i, yPoint] == MazePlatform.CLOSED)
-                            {
-                                fullRight = false;
-
-                                if (i <= 20)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    curveLength = i - 5;
-                                    MazeTrails.createTrail(xPoint, yPoint, MazePlatform.RIGHT, curveLength);
-                                    xPoint += curveLength;
-                                    break;
-                                }
-                            }
+                            goRight = true;
                         }
-                        if (fullRight)
+
+                        if (distanceToBorder < curveLength)
+                        {
+                            curveLength = distanceToBorder - 20;
+                            if (curveLength < 10) { goRight = false; }
+                        }
+
+                        if (goRight)
                         {
                             MazeTrails.createTrail(xPoint, yPoint, MazePlatform.RIGHT, curveLength);
                             xPoint += curveLength;
                         }
-                    }                       
+                    }
                 }
-                else if (curves % 2 == 0 && curves == curveBreaks)
+                else if (curves % 2 == 0 && curves == curveBreaks)  // fix this to eliminate the gaps and to keep it from going over other trails
                 {
                     int direction = rnd.Next(1, 3);
 
@@ -164,7 +136,7 @@ namespace Maze
                         while (yPoint < 200)
                         {
                             yPoint++;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.CLOSED;
+                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
                         }
                     }
                     else if (direction == MazePlatform.UP)
@@ -172,7 +144,7 @@ namespace Maze
                         while (yPoint > 0)
                         {
                             yPoint--;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.CLOSED;
+                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
                         }
                     }
                 }
@@ -185,7 +157,7 @@ namespace Maze
                         while (xPoint < 199)
                         {
                             xPoint++;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.CLOSED;
+                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
                         }
                     }
                     else if (direction == MazePlatform.LEFT)
@@ -193,11 +165,11 @@ namespace Maze
                         while (xPoint > 0)
                         {
                             xPoint--;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.CLOSED;
+                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
                         }
                     }
                 }
             }
-        }
+        }    
     }
 }
