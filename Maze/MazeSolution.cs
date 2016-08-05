@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 
 namespace Maze
 {
-    class MazeSolution : MazeTrails             //This class should create the maze solution and do other things, like display it on demand
+    class MazeSolution : MazeTrail             //This class should create the maze solution and do other things, like display it on demand
     {                                           //This class can inherit from the MazeTrails class because it's a trail, except it's the lone solution
-                                                //public MazeSolution() : base()
-                                                //{ }        
+        //public MazeSolution() : base()
+        //{
 
-        public static void CreateMazeSolution()
+        //}        
+        
+        public void CreateMazeSolution()
         {
             Random rnd = new Random();
             int yPoint = rnd.Next(10, 190);
             int xPoint = 1;
             int curveBreaks = 25;
+            int priorDirection = MazePlatform.RIGHT;
 
             for (int curves = 1; curves <= curveBreaks; curves++)
             {
@@ -24,10 +27,10 @@ namespace Maze
                 {
                     int curveLength = rnd.Next(20, 50);
 
-                    MazeTrails.createTrail(xPoint, yPoint, MazePlatform.RIGHT, curveLength);
+                    createTrail(xPoint, yPoint, MazePlatform.RIGHT, curveLength);
                     xPoint += curveLength;
                 }
-                else if (curves % 2 == 0 && curves != curveBreaks)   // second direction and all even directions are up or down
+                else if ((priorDirection == MazePlatform.RIGHT || priorDirection == MazePlatform.LEFT) && curves != curveBreaks)
                 {
                     int curveLength = rnd.Next(20, 50);
                     int direction = rnd.Next(1, 3);
@@ -35,49 +38,51 @@ namespace Maze
                     if (direction == MazePlatform.DOWN)
                     {
                         bool goDown = false;
-                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
+                        int _distanceToBorder = distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
 
-                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
+                        if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
                             goDown = true;
                         }
 
-                        if (distanceToBorder < curveLength)
+                        if (_distanceToBorder < curveLength)
                         {
-                            curveLength = distanceToBorder - 20;
+                            curveLength = _distanceToBorder - 20;
                             if (curveLength < 10) { goDown = false; }
                         }
-                        
+
                         if (goDown)
                         {
-                            MazeTrails.createTrail(xPoint, yPoint, MazePlatform.DOWN, curveLength);
+                            createTrail(xPoint, yPoint, MazePlatform.DOWN, curveLength);
                             yPoint += curveLength;
+                            priorDirection = MazePlatform.DOWN;
                         }
                     }
                     else if (direction == MazePlatform.UP)
                     {
                         bool goUp = false;
-                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.UP);
+                        int _distanceToBorder = distanceToBorder(xPoint, yPoint, MazePlatform.UP);
 
-                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.UP) == MazePlatform.NO_TRAIL_IN_WAY)
+                        if (distanceToTrail(xPoint, yPoint, MazePlatform.UP) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
                             goUp = true;
                         }
 
-                        if (distanceToBorder < curveLength)
+                        if (_distanceToBorder < curveLength)
                         {
-                            curveLength = distanceToBorder - 20;
+                            curveLength = _distanceToBorder - 20;
                             if (curveLength < 10) { goUp = false; }
                         }
 
                         if (goUp)
                         {
-                            MazeTrails.createTrail(xPoint, yPoint, MazePlatform.UP, curveLength);
+                            createTrail(xPoint, yPoint, MazePlatform.UP, curveLength);
                             yPoint -= curveLength;
+                            priorDirection = MazePlatform.UP;
                         }
                     }
                 }
-                else if (curves % 2 != 0 && curves != curveBreaks) //odd directions are left or right
+                else if ((priorDirection == MazePlatform.DOWN || priorDirection == MazePlatform.UP) && curves != curveBreaks)
                 {
                     int curveLength = rnd.Next(20, 50);
                     int direction = rnd.Next(3, 5);
@@ -85,9 +90,9 @@ namespace Maze
                     if (direction == MazePlatform.LEFT)
                     {
                         bool goLeft = false;
-                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
+                        int distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
 
-                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
+                        if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
                             goLeft = true;
                         }
@@ -100,16 +105,17 @@ namespace Maze
 
                         if (goLeft)
                         {
-                            MazeTrails.createTrail(xPoint, yPoint, MazePlatform.LEFT, curveLength);
+                            createTrail(xPoint, yPoint, MazePlatform.LEFT, curveLength);
                             xPoint -= curveLength;
+                            priorDirection = MazePlatform.LEFT;
                         }
                     }
                     else if (direction == MazePlatform.RIGHT)
                     {
                         bool goRight = false;
-                        int distanceToBorder = MazeTrails.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
+                        int distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
 
-                        if (MazeTrails.distanceToTrail(xPoint, yPoint, MazePlatform.RIGHT) == MazePlatform.NO_TRAIL_IN_WAY)
+                        if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.RIGHT) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
                             goRight = true;
                         }
@@ -122,50 +128,107 @@ namespace Maze
 
                         if (goRight)
                         {
-                            MazeTrails.createTrail(xPoint, yPoint, MazePlatform.RIGHT, curveLength);
+                            createTrail(xPoint, yPoint, MazePlatform.RIGHT, curveLength);
                             xPoint += curveLength;
+                            priorDirection = MazePlatform.RIGHT;
                         }
                     }
                 }
-                else if (curves % 2 == 0 && curves == curveBreaks)  // fix this to eliminate the gaps and to keep it from going over other trails
+                else if (curves == curveBreaks)
                 {
-                    int direction = rnd.Next(1, 3);
+                    int direction = rnd.Next(1, 5);
+                    int distanceToBorder = 0;
 
                     if (direction == MazePlatform.DOWN)
                     {
-                        while (yPoint < 200)
+                        if (distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            yPoint++;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
+                            createTrail(xPoint, yPoint, MazePlatform.DOWN, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.UP) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.UP);
+                            createTrail(xPoint, yPoint, MazePlatform.UP, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
+                            createTrail(xPoint, yPoint, MazePlatform.LEFT, distanceToBorder);
+                        }
+                        else
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
+                            createTrail(xPoint, yPoint, MazePlatform.RIGHT, distanceToBorder);
                         }
                     }
                     else if (direction == MazePlatform.UP)
                     {
-                        while (yPoint > 0)
+                        if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.UP) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            yPoint--;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.UP);
+                            createTrail(xPoint, yPoint, MazePlatform.UP, distanceToBorder);
                         }
-                    }
-                }
-                else if (curves % 2 != 0 && curves == curveBreaks)
-                {
-                    int direction = rnd.Next(3, 5);
-
-                    if (direction == MazePlatform.RIGHT)
-                    {
-                        while (xPoint < 199)
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            xPoint++;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
+                            createTrail(xPoint, yPoint, MazePlatform.DOWN, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
+                            createTrail(xPoint, yPoint, MazePlatform.LEFT, distanceToBorder);
+                        }
+                        else
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
+                            createTrail(xPoint, yPoint, MazePlatform.RIGHT, distanceToBorder);
                         }
                     }
                     else if (direction == MazePlatform.LEFT)
                     {
-                        while (xPoint > 0)
+                        if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
                         {
-                            xPoint--;
-                            MazePlatform.status[xPoint, yPoint] = MazePlatform.TRAIL;
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
+                            createTrail(xPoint, yPoint, MazePlatform.LEFT, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
+                            createTrail(xPoint, yPoint, MazePlatform.DOWN, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.UP) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.UP);
+                            createTrail(xPoint, yPoint, MazePlatform.UP, distanceToBorder);
+                        }
+                        else
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
+                            createTrail(xPoint, yPoint, MazePlatform.RIGHT, distanceToBorder);
+                        }
+                    }
+                    else if (direction == MazePlatform.RIGHT)
+                    {
+                        if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.RIGHT) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.RIGHT);
+                            createTrail(xPoint, yPoint, MazePlatform.RIGHT, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.DOWN) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.DOWN);
+                            createTrail(xPoint, yPoint, MazePlatform.DOWN, distanceToBorder);
+                        }
+                        else if (MazeTrail.distanceToTrail(xPoint, yPoint, MazePlatform.LEFT) == MazePlatform.NO_TRAIL_IN_WAY)
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.LEFT);
+                            createTrail(xPoint, yPoint, MazePlatform.LEFT, distanceToBorder);
+                        }
+                        else
+                        {
+                            distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, MazePlatform.UP);
+                            createTrail(xPoint, yPoint, MazePlatform.UP, distanceToBorder);
                         }
                     }
                 }

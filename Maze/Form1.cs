@@ -20,10 +20,12 @@ namespace Maze
         {
             InitializeComponent();
 
+            MazeSolution mazeSolution = new MazeSolution();
+
             MazePlatform.CreateMazePlatform();
             MazePlatform.InitializeMazeStatus();
             MazePlatform.CreateMazeBorders();
-            MazeSolution.CreateMazeSolution();
+            mazeSolution.CreateMazeSolution();
         }
 
         private void control_panel_Paint(object sender, PaintEventArgs e) // VS doesn't like it when I try to remove this
@@ -60,9 +62,11 @@ namespace Maze
 
         private void go_button_Click(object sender, EventArgs e)
         {
+            MazeSolution mazeSolution = new MazeSolution();
+
             MazePlatform.InitializeMazeStatus();
             MazePlatform.CreateMazeBorders();
-            MazeSolution.CreateMazeSolution();
+            mazeSolution.CreateMazeSolution();
             canvas.Refresh();
         }
     }

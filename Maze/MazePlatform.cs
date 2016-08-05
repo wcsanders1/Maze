@@ -18,6 +18,8 @@ namespace Maze
 
         public const int NO_TRAIL_IN_WAY = 999999;
 
+        public const int SOLUTION = 111;
+
         public const int UP = 1;
         public const int DOWN = 2;
         public const int RIGHT = 3;
