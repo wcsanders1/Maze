@@ -18,6 +18,7 @@ namespace Maze
         public const int OPEN = 1;
         public const int TRAIL = 2;
         public const int BORDER = 3;
+        public const int TRAILBORDER = 4;
 
         public const int NO_TRAIL_IN_WAY = 999999;
 

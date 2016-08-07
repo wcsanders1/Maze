@@ -65,7 +65,7 @@
             this.difficulty_txt.Name = "difficulty_txt";
             this.difficulty_txt.Size = new System.Drawing.Size(80, 22);
             this.difficulty_txt.TabIndex = 4;
-            this.difficulty_txt.Text = "3";
+            this.difficulty_txt.Text = "5";
             // 
             // num_lines
             // 

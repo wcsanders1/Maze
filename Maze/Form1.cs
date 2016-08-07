@@ -32,6 +32,7 @@ namespace Maze
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazePlatform.status = mazeSolution.CreateMazeSolution(mazePlatform);
+            mazePlatform.status = mazeSolution.DrawTrails(mazePlatform);
             DrawMaze(mazePlatform);
         }
 
@@ -48,7 +49,7 @@ namespace Maze
             {
                 for (int y = 0; y < mazePlatform.mazeWidth; y++)
                 {
-                    if (mazePlatform.status[x, y] == MazePlatform.TRAIL || mazePlatform.status[x, y] == MazePlatform.BORDER)
+                    if (mazePlatform.status[x, y] == MazePlatform.TRAILBORDER || mazePlatform.status[x, y] == MazePlatform.BORDER)
                     {
                         g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
                     }
@@ -63,13 +64,14 @@ namespace Maze
 
         private void go_button_Click(object sender, EventArgs e)
         {
-
-            //MazeSolution mazeSolution = new MazeSolution();
-            //MazePlatform mazePlatform = new MazePlatform();
             difficultyLevel = int.Parse(difficulty_txt.Text);
+
+            mazePlatform = new MazePlatform();
+            mazeSolution = new MazeSolution();
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazePlatform.status = mazeSolution.CreateMazeSolution(mazePlatform);
+            mazePlatform.status = mazeSolution.DrawTrails(mazePlatform);
             canvas.Refresh();
         }
 
