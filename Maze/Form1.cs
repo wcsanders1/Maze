@@ -63,14 +63,14 @@ namespace Maze
 
         private void go_button_Click(object sender, EventArgs e)
         {
-            MazeSolution mazeSolution = new MazeSolution();
-            MazePlatform mazePlatform = new MazePlatform();
+
+            //MazeSolution mazeSolution = new MazeSolution();
+            //MazePlatform mazePlatform = new MazePlatform();
             difficultyLevel = int.Parse(difficulty_txt.Text);
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazePlatform.status = mazeSolution.CreateMazeSolution(mazePlatform);
             canvas.Refresh();
-            DrawMaze(mazePlatform);
         }
 
         private void num_lines_Click(object sender, EventArgs e)

@@ -30,16 +30,18 @@ namespace Maze
 
         public MazePlatform()
         {
+
+        }
+
+        public void CreateMazePlatform(int canvasWidth, int canvasHeight)
+        {
             mazeWidth = Maze.difficultyLevel * 100;
             mazeHeight = Maze.difficultyLevel * 100;
 
             mazeX = new int[mazeWidth];
             mazeY = new int[mazeHeight];
             status = new int[mazeWidth, mazeHeight];
-        }
 
-        public void CreateMazePlatform(int canvasWidth, int canvasHeight)
-        {
             int initialX = (canvasWidth / 2) - (mazeWidth / 2);
             int initialY = (canvasHeight / 2) - (mazeHeight / 2);
 
@@ -72,12 +74,12 @@ namespace Maze
             for (int x = 0; x < mazeWidth; x++)
             {
                 status[x, 0] = BORDER;    //closes bottom border
-                status[x, 199] = BORDER;  //closes top border
+                status[x, (mazeHeight - 1)] = BORDER;  //closes top border
             }
             for (int y = 0; y < mazeHeight; y++)
             {
                 status[0, y] = BORDER;    //closes left border
-                status[199, y] = BORDER;  //closes right border
+                status[(mazeWidth - 1), y] = BORDER;  //closes right border
             }
         }
     }
