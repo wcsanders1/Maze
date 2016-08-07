@@ -8,9 +8,12 @@ namespace Maze
 {
     public class MazePlatform   // This class contains functions that create the maze platform, initialize the status of the pixels on the platfor, and create the maze borders
     {
-        public static int[] mazeX = new int[200];
-        public static int[] mazeY = new int[200];
-        public static int[,] status = new int[200, 200];
+        public int mazeWidth = 0;
+        public int mazeHeight = 0;
+
+        public int[] mazeX = null;
+        public int[] mazeY = null;
+        public int[,] status = null;
 
         public const int OPEN = 1;
         public const int TRAIL = 2;
@@ -25,41 +28,53 @@ namespace Maze
         public const int RIGHT = 3;
         public const int LEFT = 4;
 
-        public static void CreateMazePlatform()
+        public MazePlatform()
         {
-            for (int i = 0; i < 200; i++)
+            mazeWidth = Maze.difficultyLevel * 100;
+            mazeHeight = Maze.difficultyLevel * 100;
+
+            mazeX = new int[mazeWidth];
+            mazeY = new int[mazeHeight];
+            status = new int[mazeWidth, mazeHeight];
+        }
+
+        public void CreateMazePlatform(int canvasWidth, int canvasHeight)
+        {
+            int initialX = (canvasWidth / 2) - (mazeWidth / 2);
+            int initialY = (canvasHeight / 2) - (mazeHeight / 2);
+
+            for (int i = 0; i < mazeWidth; i++)
             {
-                mazeX[i] = i + 20;
+                mazeX[i] = i + initialX;
             }
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < mazeHeight; i++)
             {
-                mazeY[i] = i + 20;
+                mazeY[i] = i + initialY;
             }
 
             InitializeMazeStatus();
-
             CreateMazeBorders();
         }
 
-        public static void InitializeMazeStatus()
+        public void InitializeMazeStatus()
         {
-            for (int x = 0; x < 200; x++)
+            for (int x = 0; x < mazeWidth; x++)
             {
-                for (int y = 0; y < 200; y++)
+                for (int y = 0; y < mazeHeight; y++)
                 {
                     status[x, y] = OPEN;
                 }
             }
         }
 
-        public static void CreateMazeBorders()
+        public void CreateMazeBorders()
         {
-            for (int x = 0; x < 200; x++)
+            for (int x = 0; x < mazeWidth; x++)
             {
                 status[x, 0] = BORDER;    //closes bottom border
                 status[x, 199] = BORDER;  //closes top border
             }
-            for (int y = 0; y < 200; y++)
+            for (int y = 0; y < mazeHeight; y++)
             {
                 status[0, y] = BORDER;    //closes left border
                 status[199, y] = BORDER;  //closes right border

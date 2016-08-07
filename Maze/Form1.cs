@@ -16,16 +16,23 @@ namespace Maze
         
         public Graphics g = null;
 
+        MazeSolution mazeSolution = null;
+        MazePlatform mazePlatform = null;
+
+        public static int difficultyLevel = 0;
+
         public Maze()
         {
             InitializeComponent();
 
-            MazeSolution mazeSolution = new MazeSolution();
+            difficultyLevel = int.Parse(difficulty_txt.Text);
 
-            MazePlatform.CreateMazePlatform();
-            MazePlatform.InitializeMazeStatus();
-            MazePlatform.CreateMazeBorders();
-            mazeSolution.CreateMazeSolution();
+            mazePlatform = new MazePlatform();
+            mazeSolution = new MazeSolution();
+
+            mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
+            mazePlatform.status = mazeSolution.CreateMazeSolution(mazePlatform);
+            DrawMaze(mazePlatform);
         }
 
         private void control_panel_Paint(object sender, PaintEventArgs e) // VS doesn't like it when I try to remove this
@@ -33,41 +40,42 @@ namespace Maze
 
         }
 
-        private void canvas_Paint(object sender, PaintEventArgs e)
+        public void DrawMaze(MazePlatform mazePlatform)
         {
-
-            //myPen.Width = 1;
-
-            //my_length = Int32.Parse(length_txt.Text);
-
-
             g = canvas.CreateGraphics();
 
-            for (int x = 0; x < 200; x++)
+            for (int x = 0; x < mazePlatform.mazeHeight; x++)
             {
-                for (int y = 0; y < 200; y++)
+                for (int y = 0; y < mazePlatform.mazeWidth; y++)
                 {
-                    if (MazePlatform.status[x, y] == MazePlatform.TRAIL || MazePlatform.status[x, y] == MazePlatform.BORDER)
+                    if (mazePlatform.status[x, y] == MazePlatform.TRAIL || mazePlatform.status[x, y] == MazePlatform.BORDER)
                     {
-                        g.FillRectangle(myBrush, MazePlatform.mazeX[x], MazePlatform.mazeY[y], 1, 1);
+                        g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
                     }
                 }
             }
+        }
 
-            //for (int i = 0; i < Int32.Parse(num_lines_txt.Text); i++)
-            //{
-            //    drawLine();
-            //}
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            DrawMaze(mazePlatform);
         }
 
         private void go_button_Click(object sender, EventArgs e)
         {
             MazeSolution mazeSolution = new MazeSolution();
+            MazePlatform mazePlatform = new MazePlatform();
+            difficultyLevel = int.Parse(difficulty_txt.Text);
 
-            MazePlatform.InitializeMazeStatus();
-            MazePlatform.CreateMazeBorders();
-            mazeSolution.CreateMazeSolution();
+            mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
+            mazePlatform.status = mazeSolution.CreateMazeSolution(mazePlatform);
             canvas.Refresh();
+            DrawMaze(mazePlatform);
+        }
+
+        private void num_lines_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
