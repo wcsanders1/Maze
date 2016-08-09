@@ -29,7 +29,7 @@ namespace Maze
         public int[,] CreateMazeSolution(MazePlatform mazePlatform)
         {
             Random rnd = new Random();
-            int yPoint = rnd.Next(10, (mazePlatform.mazeHeight - 10));
+            int yPoint = rnd.Next(50, (mazePlatform.mazeHeight - 50));
             int xPoint = 1;
             int priorDirection = RIGHT;
             bool initialCurve = true;
@@ -39,7 +39,7 @@ namespace Maze
             {
                 if (initialCurve)
                 {
-                    int curveLength = rnd.Next(20, 50);
+                    int curveLength = rnd.Next(30, 50);
 
                     mazePlatform.status = createTrail(xPoint, yPoint, RIGHT, curveLength, mazePlatform);
                     xPoint += curveLength;
@@ -47,7 +47,7 @@ namespace Maze
                 }
                 else if (priorDirection == RIGHT || priorDirection == LEFT)
                 {
-                    int curveLength = rnd.Next(20, 50);
+                    int curveLength = rnd.Next(30, 50);
                     int direction = rnd.Next(1, 3);
 
                     if (direction == DOWN)
@@ -55,7 +55,7 @@ namespace Maze
                         bool goDown = true;
                         int _distanceToBorder = distanceToBorder(xPoint, yPoint, DOWN, mazePlatform);
 
-                        if (_distanceToBorder < curveLength + 10)
+                        if (_distanceToBorder < curveLength + 20)
                         {
                             goDown = false;
                         }
@@ -73,7 +73,7 @@ namespace Maze
                         bool goUp = true;
                         int _distanceToBorder = distanceToBorder(xPoint, yPoint, UP, mazePlatform);
 
-                        if (_distanceToBorder < curveLength + 10)
+                        if (_distanceToBorder < curveLength + 20)
                         {
                             goUp = false;
                         }
@@ -89,10 +89,10 @@ namespace Maze
                 }
                 else if (priorDirection == DOWN || priorDirection == UP)
                 {
-                    int curveLength = rnd.Next(20, 50);
+                    int curveLength = rnd.Next(30, 50);
                     int distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
 
-                    if (distanceToBorder <= curveLength)
+                    if (distanceToBorder <= curveLength + 20)
                     {
                         mazePlatform.status = createTrail(xPoint, yPoint, RIGHT, distanceToBorder, mazePlatform);
                         keepGoing = false;
