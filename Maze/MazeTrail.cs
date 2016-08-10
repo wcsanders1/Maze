@@ -35,6 +35,8 @@ namespace Maze
         public List<int> trailDirection = null;
         public List<int> positionStatus = null;
 
+        public List<MazeTrail> mazeTrailList = null;
+
         public MazeTrail()
         {
             xPosition = new List<int>();
@@ -167,8 +169,8 @@ namespace Maze
                     }
                     else if (trailDirection[i + 1] == UP)
                     {
-                        if (positionStatus[i] != OPENS_RIGHT) { mazePlatform.status[(xPosition[i] - halfTrailWidth), yPosition[i]] = TRAILBORDER; }
-                        if (positionStatus[i] != OPENS_LEFT) { mazePlatform.status[(xPosition[i] + halfTrailWidth), yPosition[i]] = TRAILBORDER; }
+                        if (positionStatus[i] != OPENS_LEFT) { mazePlatform.status[(xPosition[i] - halfTrailWidth), yPosition[i]] = TRAILBORDER; }
+                        if (positionStatus[i] != OPENS_RIGHT) { mazePlatform.status[(xPosition[i] + halfTrailWidth), yPosition[i]] = TRAILBORDER; }
                     }
                     else if (trailDirection[i + 1] == RIGHT)
                     {
@@ -219,6 +221,64 @@ namespace Maze
             return mazePlatform.status;
         }
 
+        public void CreateMazeDeadEnd(List<MazeTrail> mazeTrail, MazePlatform mazePlatform)
+        {
+            int priorDirection = 0;
+            int stepsInSameDirection = 0;
+            Random rnd = new Random();
+            int openingLocation = 0;
+            int openingDirection = 0;
 
+            mazeTrailList = new List<MazeTrail>();
+
+            foreach (MazeTrail trail in mazeTrail)
+            {
+                stepsInSameDirection = 0;
+                priorDirection = trail.trailDirection[0];
+
+                for (int i = 0; i < trail.xPosition.Count; i++)
+                {
+                    if (priorDirection == trail.trailDirection[i])    //   FIX THIS; THIS IS WHY IT NEVER MAKES OPENINGS LEFT OR RIGHT
+                    {
+                        stepsInSameDirection++;
+
+                        if (stepsInSameDirection == 20)
+                        {
+                            if (rnd.Next(10) < 5)  //This makes a trail opening on a curve 50% of the time
+                            {
+                                if (trail.trailDirection[i] == LEFT || trail.trailDirection[i] == RIGHT)
+                                {
+                                    openingLocation = rnd.Next(1, 5);
+                                    openingDirection = rnd.Next(5, 7);
+
+
+                                    for (int x = 0; x < trailWidth; x++)
+                                    {
+                                        mazePlatform.status[(trail.xPosition[i] - x) - openingLocation, (trail.yPosition[i])] = openingDirection;
+                                        trail.positionStatus[i - x] = openingDirection;
+                                    }
+                                }
+                                else
+                                {
+                                    openingLocation = rnd.Next(1, 5);
+                                    openingDirection = rnd.Next(7, 9);
+                                    priorDirection = trail.trailDirection[i];
+
+                                    for (int y = 0; y < trailWidth; y++)
+                                    {
+                                        mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y) - openingLocation] = openingDirection;
+                                        trail.positionStatus[i - y] = openingDirection;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        stepsInSameDirection = 0;
+                    }
+                }
+            }
+        }
     }
 }

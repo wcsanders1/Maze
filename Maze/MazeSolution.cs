@@ -13,7 +13,7 @@ namespace Maze
 
         }
 
-        public int[,] CreateMazeSolution(MazePlatform mazePlatform)
+        public void CreateMazeSolution(MazePlatform mazePlatform)
         {
             Random rnd = new Random();
             int yPoint = rnd.Next(50, (mazePlatform.mazeHeight - 50));
@@ -21,6 +21,8 @@ namespace Maze
             int priorDirection = RIGHT;
             bool initialCurve = true;
             bool keepGoing = true;
+
+            mazeTrailList = new List<MazeTrail>();
 
             for (int i = 1; i < trailWidth; i++)   // This makes the beginning of the solution open
             {
@@ -103,7 +105,11 @@ namespace Maze
                 mazePlatform.status[(mazePlatform.mazeWidth - 1), ((yPoint - halfTrailWidth) + i)] = OPEN;   // This opens the end of the solution
             }
 
-            return mazePlatform.status;
+            mazeTrailList.Add(this);
+
+            CreateMazeDeadEnd(mazeTrailList, mazePlatform);
+
+            //return mazePlatform.status;
         }    
     }
 }
