@@ -13,19 +13,6 @@ namespace Maze
 
         }
 
-        public const int OPEN = MazePlatform.OPEN;
-        public const int TRAIL = MazePlatform.TRAIL;
-        public const int BORDER = MazePlatform.BORDER;
-
-        public const int NO_TRAIL_IN_WAY = MazePlatform.NO_TRAIL_IN_WAY;
-
-        public const int SOLUTION = MazePlatform.SOLUTION;
-
-        public const int UP = MazePlatform.UP;
-        public const int DOWN = MazePlatform.DOWN;
-        public const int RIGHT = MazePlatform.RIGHT;
-        public const int LEFT = MazePlatform.LEFT;
-
         public int[,] CreateMazeSolution(MazePlatform mazePlatform)
         {
             Random rnd = new Random();
@@ -34,6 +21,11 @@ namespace Maze
             int priorDirection = RIGHT;
             bool initialCurve = true;
             bool keepGoing = true;
+
+            for (int i = 1; i < trailWidth; i++)   // This makes the beginning of the solution open
+            {
+                mazePlatform.status[0, ((yPoint - halfTrailWidth) + i)] = OPEN;
+            }
 
             while (keepGoing)
             {
@@ -105,6 +97,12 @@ namespace Maze
                     }
                 }
             }
+
+            for (int i = 1; i < trailWidth; i++)
+            {
+                mazePlatform.status[(mazePlatform.mazeWidth - 1), ((yPoint - halfTrailWidth) + i)] = OPEN;   // This opens the end of the solution
+            }
+
             return mazePlatform.status;
         }    
     }

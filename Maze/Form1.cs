@@ -18,6 +18,9 @@ namespace Maze
 
         MazeSolution mazeSolution = null;
         MazePlatform mazePlatform = null;
+        MazeDeadEnd mazeDeadEnd = null;
+
+        MazeTrail[] mazeTrailArray = null;  //THis should be a list instead of an array because you don't know how big it'll be
 
         public static int difficultyLevel = 0;
 
@@ -29,9 +32,13 @@ namespace Maze
 
             mazePlatform = new MazePlatform();
             mazeSolution = new MazeSolution();
+            mazeDeadEnd = new MazeDeadEnd();
+
+
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazePlatform.status = mazeSolution.CreateMazeSolution(mazePlatform);
+
             mazePlatform.status = mazeSolution.DrawTrails(mazePlatform);
             DrawMaze(mazePlatform);
         }
