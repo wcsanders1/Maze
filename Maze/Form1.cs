@@ -37,7 +37,7 @@ namespace Maze
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazeSolution.CreateMazeSolution(mazePlatform);
 
-            mazePlatform.status = mazeSolution.DrawTrails(mazePlatform);
+            mazeSolution.DrawTrails(mazeSolution, mazePlatform);
             DrawMaze(mazePlatform);
         }
 
@@ -50,9 +50,9 @@ namespace Maze
         {
             g = canvas.CreateGraphics();
 
-            for (int x = 0; x < mazePlatform.mazeHeight; x++)
+            for (int x = 0; x < mazePlatform.mazeWidth; x++)
             {
-                for (int y = 0; y < mazePlatform.mazeWidth; y++)
+                for (int y = 0; y < mazePlatform.mazeHeight; y++)
                 {
                     if (mazePlatform.status[x, y] == MazePlatform.TRAILBORDER || mazePlatform.status[x, y] == MazePlatform.BORDER)
                     {
@@ -76,7 +76,7 @@ namespace Maze
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazeSolution.CreateMazeSolution(mazePlatform);
-            mazePlatform.status = mazeSolution.DrawTrails(mazePlatform);
+            mazeSolution.DrawTrails(mazeSolution, mazePlatform);
             canvas.Refresh();
         }
 

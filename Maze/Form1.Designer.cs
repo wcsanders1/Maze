@@ -45,7 +45,7 @@
             this.control_panel.Dock = System.Windows.Forms.DockStyle.Top;
             this.control_panel.Location = new System.Drawing.Point(0, 0);
             this.control_panel.Name = "control_panel";
-            this.control_panel.Size = new System.Drawing.Size(1264, 100);
+            this.control_panel.Size = new System.Drawing.Size(1712, 100);
             this.control_panel.TabIndex = 0;
             this.control_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.control_panel_Paint);
             // 
@@ -85,7 +85,7 @@
             this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvas.Location = new System.Drawing.Point(0, 100);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(1264, 627);
+            this.canvas.Size = new System.Drawing.Size(1712, 646);
             this.canvas.TabIndex = 1;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
@@ -93,7 +93,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 727);
+            this.ClientSize = new System.Drawing.Size(1712, 746);
             this.Controls.Add(this.canvas);
             this.Controls.Add(this.control_panel);
             this.Name = "Maze";

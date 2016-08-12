@@ -40,7 +40,7 @@ namespace Maze
 
         public void CreateMazePlatform(int canvasWidth, int canvasHeight)
         {
-            mazeWidth = Maze.difficultyLevel * 100;
+            mazeWidth = Maze.difficultyLevel * 150;
             mazeHeight = Maze.difficultyLevel * 100;
 
             mazeX = new int[mazeWidth];
