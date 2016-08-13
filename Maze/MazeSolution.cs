@@ -35,7 +35,7 @@ namespace Maze
                 {
                     int curveLength = rnd.Next(15, 60);
 
-                    mazePlatform.status = createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
+                    createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
                     xPoint += curveLength;
                     initialCurve = false;
                 }
@@ -56,7 +56,7 @@ namespace Maze
 
                         if (goDown)
                         {
-                            mazePlatform.status = createTrail(xPoint, yPoint, DOWN, curveLength, this, mazePlatform);
+                            createTrail(xPoint, yPoint, DOWN, curveLength, this, mazePlatform);
                             yPoint += curveLength;
                         }
 
@@ -74,7 +74,7 @@ namespace Maze
 
                         if (goUp)
                         {
-                            mazePlatform.status = createTrail(xPoint, yPoint, UP, curveLength, this, mazePlatform);
+                            createTrail(xPoint, yPoint, UP, curveLength, this, mazePlatform);
                             yPoint -= curveLength;
                         }
 
@@ -88,12 +88,12 @@ namespace Maze
 
                     if (distanceToBorder <= curveLength + 20)
                     {
-                        mazePlatform.status = createTrail(xPoint, yPoint, RIGHT, distanceToBorder, this, mazePlatform);
+                        createTrail(xPoint, yPoint, RIGHT, distanceToBorder, this, mazePlatform);
                         keepGoing = false;
                     }
                     else
                     {
-                        mazePlatform.status = createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
+                        createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
                         xPoint += curveLength;
                         priorDirection = RIGHT;
                     }
