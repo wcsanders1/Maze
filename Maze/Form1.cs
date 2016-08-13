@@ -56,6 +56,17 @@ namespace Maze
                 {
                     if (mazePlatform.status[x, y] == MazePlatform.TRAILBORDER || mazePlatform.status[x, y] == MazePlatform.BORDER)
                     {
+                        myBrush = Brushes.Black;
+                        g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
+                    }
+                    else if (mazePlatform.status[x, y] == MazePlatform.OPEN)
+                    {
+                        myBrush = Brushes.BlanchedAlmond;
+                        g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
+                    }
+                    else if (mazePlatform.status[x, y] == MazePlatform.TRAIL)
+                    {
+                        myBrush = Brushes.White;
                         g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
                     }
                 }
