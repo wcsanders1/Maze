@@ -10,7 +10,7 @@ namespace Maze
     {                                           //This class can inherit from the MazeTrails class because it's a trail, except it's the lone solution
         public MazeSolution() : base()
         {
-
+            solution = true;
         }
 
         public void CreateMazeSolution(MazePlatform mazePlatform)
@@ -33,7 +33,7 @@ namespace Maze
             {
                 if (initialCurve)
                 {
-                    int curveLength = rnd.Next(15, 60);
+                    int curveLength = getTrailLength();
 
                     createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
                     xPoint += curveLength;
@@ -41,7 +41,7 @@ namespace Maze
                 }
                 else if (priorDirection == RIGHT || priorDirection == LEFT)
                 {
-                    int curveLength = rnd.Next(15, 60);
+                    int curveLength = getTrailLength();
                     int direction = rnd.Next(1, 3);
 
                     if (direction == DOWN)
@@ -83,7 +83,7 @@ namespace Maze
                 }
                 else if (priorDirection == DOWN || priorDirection == UP)
                 {
-                    int curveLength = rnd.Next(15, 60);
+                    int curveLength = getTrailLength();
                     int distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
 
                     if (distanceToBorder <= curveLength + 20)
