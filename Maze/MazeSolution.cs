@@ -13,7 +13,7 @@ namespace Maze
             solution = true;
         }
 
-        public void CreateMazeSolution(MazePlatform mazePlatform)
+        public void CreateMazeSolution(MazeSolution mazeSolution, MazePlatform mazePlatform)
         {
             Random rnd = new Random();
             int yPoint = rnd.Next(50, (mazePlatform.mazeHeight - 50));
@@ -35,7 +35,8 @@ namespace Maze
                 {
                     int curveLength = getTrailLength();
 
-                    createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
+                    createTrail(xPoint, yPoint, RIGHT, curveLength, mazeSolution, mazePlatform);
+                    DrawTrails(mazeSolution, mazePlatform);
                     xPoint += curveLength;
                     initialCurve = false;
                 }
@@ -56,7 +57,8 @@ namespace Maze
 
                         if (goDown)
                         {
-                            createTrail(xPoint, yPoint, DOWN, curveLength, this, mazePlatform);
+                            createTrail(xPoint, yPoint, DOWN, curveLength, mazeSolution, mazePlatform);
+                            DrawTrails(mazeSolution, mazePlatform);
                             yPoint += curveLength;
                         }
 
@@ -74,7 +76,8 @@ namespace Maze
 
                         if (goUp)
                         {
-                            createTrail(xPoint, yPoint, UP, curveLength, this, mazePlatform);
+                            createTrail(xPoint, yPoint, UP, curveLength, mazeSolution, mazePlatform);
+                            DrawTrails(mazeSolution, mazePlatform);
                             yPoint -= curveLength;
                         }
 
@@ -88,12 +91,14 @@ namespace Maze
 
                     if (distanceToBorder <= curveLength + 20)
                     {
-                        createTrail(xPoint, yPoint, RIGHT, distanceToBorder, this, mazePlatform);
+                        createTrail(xPoint, yPoint, RIGHT, distanceToBorder, mazeSolution, mazePlatform);
+                        DrawTrails(mazeSolution, mazePlatform);
                         keepGoing = false;
                     }
                     else
                     {
-                        createTrail(xPoint, yPoint, RIGHT, curveLength, this, mazePlatform);
+                        createTrail(xPoint, yPoint, RIGHT, curveLength, mazeSolution, mazePlatform);
+                        DrawTrails(mazeSolution, mazePlatform);
                         xPoint += curveLength;
                         priorDirection = RIGHT;
                     }
@@ -105,9 +110,21 @@ namespace Maze
                 mazePlatform.status[(mazePlatform.mazeWidth - 1), ((yPoint - halfTrailWidth) + i)] = OPEN;   // This opens the end of the solution
             }
 
-            mazeTrailList.Add(this);
+            mazeTrailList.Add(mazeSolution);
 
             CreateMazeDeadEnd(mazeTrailList, mazePlatform);
+
+            //for (int i = 0; i < mazeSolution.xPosition.Count; i++)
+            //{
+            //    if (mazeSolution.positionStatus[i] == OPENS_DOWN)
+            //    {
+            //        for (int x = 1; x < 10; x++)
+            //        {
+            //            mazePlatform.status[(mazeSolution.xPosition[i] - 5) + x, mazeSolution.yPosition[i] + 5] = TRAIL;
+            //        }                
+            //    }
+            //    i += 10;
+            //}
 
         }    
     }

@@ -54,7 +54,7 @@ namespace Maze
         public int getTrailLength()
         {
             Random rnd = new Random();
-            return rnd.Next(35, 60);
+            return rnd.Next(40, 60);
         }
 
         public void createTrail(int x, int y, int direction, int distance, MazeTrail mazeTrail, MazePlatform mazePlatform)
@@ -67,6 +67,7 @@ namespace Maze
                 mazeTrail.yPosition.Add(y);
                 mazeTrail.trailDirection.Add(direction);
                 mazeTrail.positionStatus.Add(TRAIL);
+
 
                 if (direction == RIGHT && (mazePlatform.status[x++, y] == OPEN)) { x++; }
                 if (direction == LEFT && (mazePlatform.status[x--, y] == OPEN)) { x--; }
@@ -254,7 +255,7 @@ namespace Maze
                 {
                     if (mazeTrail.trailDirection[i] != mazeTrail.trailDirection[i - 1])
                     {
-                        i = i + halfTrailWidth;
+                        i += halfTrailWidth;
                     }
                 }
                 if (mazeTrail.trailDirection[i] == RIGHT)
@@ -271,14 +272,14 @@ namespace Maze
                     }
                     else if (mazeTrail.trailDirection[i + 1] == RIGHT)
                     {
-                        if (mazeTrail.positionStatus[i] != OPENS_DOWN || mazeTrail.solution == false)
-                        {
+                        //if (mazeTrail.positionStatus[i] != OPENS_DOWN)
+                        //{
                             mazePlatform.status[mazeTrail.xPosition[i], (mazeTrail.yPosition[i] + halfTrailWidth)] = TRAILBORDER;
-                        }
-                        if (mazeTrail.positionStatus[i] != OPENS_UP || mazeTrail.solution == false)
-                        {
+                        //}
+                        //if (mazeTrail.positionStatus[i] != OPENS_UP)
+                        //{
                             mazePlatform.status[mazeTrail.xPosition[i], (mazeTrail.yPosition[i] - halfTrailWidth)] = TRAILBORDER;
-                        } 
+                        //} 
 
                         for (int a = 1; a < trailWidth; a++)
                         {
@@ -330,7 +331,7 @@ namespace Maze
                         }
                     }
                 }
-                else if (mazeTrail.trailDirection[i] == LEFT)    //******************************************************************* LEFT!!!!!
+                else if (mazeTrail.trailDirection[i] == LEFT)    
                 {
                     if ((i + 1) == mazeTrail.xPosition.Count)
                     {
@@ -344,14 +345,14 @@ namespace Maze
                     }
                     else if (mazeTrail.trailDirection[i + 1] == LEFT)
                     {
-                        if (mazeTrail.positionStatus[i] != OPENS_DOWN || mazeTrail.solution == false)
-                        {
+                        //if (mazeTrail.positionStatus[i] != OPENS_DOWN)
+                        //{
                             mazePlatform.status[mazeTrail.xPosition[i], (mazeTrail.yPosition[i] + halfTrailWidth)] = TRAILBORDER;
-                        }
-                        if (mazeTrail.positionStatus[i] != OPENS_UP || mazeTrail.solution == false)
-                        {
+                        //}
+                        //if (mazeTrail.positionStatus[i] != OPENS_UP)
+                        //{
                             mazePlatform.status[mazeTrail.xPosition[i], (mazeTrail.yPosition[i] - halfTrailWidth)] = TRAILBORDER;
-                        }
+                        //}
 
                         for (int a = 1; a < trailWidth; a++)
                         {
@@ -513,7 +514,7 @@ namespace Maze
             foreach (MazeTrail trail in mazeTrail)
             {
                 stepsInSameDirection = 0;
-                priorDirection = trail.trailDirection[0];
+                priorDirection = trail.trailDirection[1];
 
                 for (int i = 0; i < trail.xPosition.Count; i++)
                 {
@@ -619,8 +620,6 @@ namespace Maze
                         yPoint = trail.yPosition[i] - halfTrailWidth;
                         newMazeTrail = new MazeTrail();
 
-             
-
                         curveLength = getTrailLength();
 
                         goUp = true;
@@ -650,11 +649,11 @@ namespace Maze
                     }
                     else if (trail.positionStatus[i] == OPENS_DOWN)
                     {
+                        
                         xPoint = trail.xPosition[i] + (halfTrailWidth);
                         yPoint = trail.yPosition[i] + (halfTrailWidth);
                         newMazeTrail = new MazeTrail();
-
-
+                        
                         curveLength = getTrailLength();
 
                         goDown = true;
@@ -783,7 +782,7 @@ namespace Maze
                             if (_distanceToBorder <= curveLength + 1 || _distanceToTrail <= curveLength + 1)
                             {
                                 keepGoing = false;
-                                closeDeadEnd(xPoint, yPoint, priorDirection, mazePlatform);  //This doesn't work
+                                closeDeadEnd(xPoint, yPoint, priorDirection, mazePlatform);
                             }
                             else
                             {

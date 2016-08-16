@@ -28,17 +28,16 @@ namespace Maze
         {
             InitializeComponent();
 
-            difficultyLevel = int.Parse(difficulty_txt.Text);
+            //difficultyLevel = int.Parse(difficulty_txt.Text);
 
-            mazePlatform = new MazePlatform();
-            mazeSolution = new MazeSolution();
-            mazeDeadEnd = new MazeDeadEnd();
+            //mazePlatform = new MazePlatform();
+            //mazeSolution = new MazeSolution();
 
-            mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
-            mazeSolution.CreateMazeSolution(mazePlatform);
+            //mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
+            //mazeSolution.CreateMazeSolution(mazeSolution, mazePlatform);
 
-            mazeSolution.DrawTrails(mazeSolution, mazePlatform);
-            DrawMaze(mazePlatform);
+            ////mazeSolution.DrawTrails(mazeSolution, mazePlatform);
+            //DrawMaze(mazePlatform);
         }
 
         private void control_panel_Paint(object sender, PaintEventArgs e) // VS doesn't like it when I try to remove this
@@ -75,6 +74,15 @@ namespace Maze
 
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
+            difficultyLevel = int.Parse(difficulty_txt.Text);
+
+            mazePlatform = new MazePlatform();
+            mazeSolution = new MazeSolution();
+
+            mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
+            mazeSolution.CreateMazeSolution(mazeSolution, mazePlatform);
+
+            //mazeSolution.DrawTrails(mazeSolution, mazePlatform);
             DrawMaze(mazePlatform);
         }
 
@@ -86,12 +94,17 @@ namespace Maze
             mazeSolution = new MazeSolution();
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
-            mazeSolution.CreateMazeSolution(mazePlatform);
-            mazeSolution.DrawTrails(mazeSolution, mazePlatform);
+            mazeSolution.CreateMazeSolution(mazeSolution, mazePlatform);
+            //mazeSolution.DrawTrails(mazeSolution, mazePlatform);
             canvas.Refresh();
         }
 
         private void num_lines_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Maze_Load(object sender, EventArgs e)
         {
 
         }
