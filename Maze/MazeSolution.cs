@@ -18,7 +18,7 @@ namespace Maze
         public void CreateMazeSolution(MazeSolution mazeSolution, MazePlatform mazePlatform)
         {
             Random rnd = new Random();
-            int yPoint = rnd.Next(250, (mazePlatform.mazeHeight - 250));
+            int yPoint = rnd.Next(100, (mazePlatform.mazeHeight - 100));
             int xPoint = 1;
             int priorDirection = RIGHT;
             bool initialCurve = true;

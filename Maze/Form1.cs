@@ -63,7 +63,11 @@ namespace Maze
                         myBrush = Brushes.BlanchedAlmond;
                         g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
                     }
-                    else if (mazePlatform.status[x, y] == MazePlatform.TRAIL)
+                    else if (mazePlatform.status[x, y] == MazePlatform.TRAIL ||
+                             mazePlatform.status[x, y] == MazePlatform.OPENS_DOWN ||
+                             mazePlatform.status[x, y] == MazePlatform.OPENS_LEFT ||
+                             mazePlatform.status[x, y] == MazePlatform.OPENS_RIGHT ||
+                             mazePlatform.status[x, y] == MazePlatform.OPENS_UP)
                     {
                         myBrush = Brushes.White;
                         g.FillRectangle(myBrush, mazePlatform.mazeX[x], mazePlatform.mazeY[y], 1, 1);
@@ -107,6 +111,17 @@ namespace Maze
         private void Maze_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            g = canvas.CreateGraphics();
+
+            for (int i = 0; i < mazeSolution.xPosition.Count; i++)
+            {
+                myBrush = Brushes.Crimson;
+                g.FillRectangle(myBrush, mazePlatform.mazeX[mazeSolution.xPosition[i]], mazePlatform.mazeY[mazeSolution.yPosition[i]], 1, 1);
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Maze
 
         public bool solution = false;           // This is true only when the trail is the solution
 
-        public int recurse = 10;
+        public bool recurse = false;
 
         public List<int> xPosition = null;    //These lists contain maze trails and allow the trails to detect each other so they don't collide
         public List<int> yPosition = null;
@@ -499,6 +499,7 @@ namespace Maze
             int priorDirection = 0;
             int stepsInSameDirection = 0;
             Random rnd = new Random();
+            recurse = false;
 
             mazeTrailList = new List<MazeTrail>();
 
@@ -608,6 +609,7 @@ namespace Maze
                         xPoint = trail.xPosition[i] + halfTrailWidth;
                         yPoint = trail.yPosition[i] - halfTrailWidth;
                         newMazeTrail = new MazeTrail();
+                        recurse = true;
 
                         curveLength = GetTrailLength();
 
@@ -641,6 +643,7 @@ namespace Maze
                         xPoint = trail.xPosition[i] + (halfTrailWidth);
                         yPoint = trail.yPosition[i] + (halfTrailWidth);
                         newMazeTrail = new MazeTrail();
+                        recurse = true;
                         
                         curveLength = GetTrailLength();
 
@@ -682,6 +685,7 @@ namespace Maze
                         }
 
                         newMazeTrail = new MazeTrail();
+                        recurse = true;
                         curveLength = GetTrailLength();
 
                         goRight = true;
@@ -722,6 +726,7 @@ namespace Maze
                         }
 
                         newMazeTrail = new MazeTrail();
+                        recurse = true;
                         curveLength = GetTrailLength();
 
                         goLeft = true;
@@ -853,10 +858,9 @@ namespace Maze
                     
                 }
             }
-
-            if (recurse > 0)
+       
+            if (recurse)
             {
-                recurse--;
                 CreateMazeDeadEnd(mazeTrailList, mazePlatform);
             }
         }

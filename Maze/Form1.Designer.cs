@@ -29,17 +29,19 @@
         private void InitializeComponent()
         {
             this.control_panel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.go_button = new System.Windows.Forms.Button();
             this.difficulty_txt = new System.Windows.Forms.TextBox();
             this.num_lines = new System.Windows.Forms.Label();
             this.canvas = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.control_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // control_panel
             // 
             this.control_panel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.control_panel.Controls.Add(this.button1);
             this.control_panel.Controls.Add(this.label1);
             this.control_panel.Controls.Add(this.go_button);
             this.control_panel.Controls.Add(this.difficulty_txt);
@@ -50,6 +52,15 @@
             this.control_panel.Size = new System.Drawing.Size(1207, 100);
             this.control_panel.TabIndex = 0;
             this.control_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.control_panel_Paint);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(167, 69);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(354, 17);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "(Caution: levels beyond 7 may take a long time to load)";
             // 
             // go_button
             // 
@@ -83,7 +94,7 @@
             // 
             // canvas
             // 
-            this.canvas.BackColor = System.Drawing.SystemColors.Info;
+            this.canvas.BackColor = System.Drawing.Color.Black;
             this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvas.Location = new System.Drawing.Point(0, 100);
             this.canvas.Name = "canvas";
@@ -91,14 +102,15 @@
             this.canvas.TabIndex = 1;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
-            // label1
+            // button1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(167, 69);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(354, 17);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "(Caution: levels beyond 7 may take a long time to load)";
+            this.button1.Location = new System.Drawing.Point(851, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 50);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Show Solution";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Maze
             // 
@@ -128,6 +140,7 @@
         private System.Windows.Forms.Button go_button;
         private System.Windows.Forms.TextBox difficulty_txt;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
