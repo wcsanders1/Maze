@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Maze
 {
-    public class MazePlatform   // This class contains functions that create the maze platform, initialize the status of the pixels on the platfor, and create the maze borders
+    public class MazePlatform   // This class contains functions that create the maze platform, initialize the status of the pixels on the platform, and create the maze borders
     {
         public int mazeWidth = 0;
         public int mazeHeight = 0;
@@ -40,7 +40,7 @@ namespace Maze
 
         public void CreateMazePlatform(int canvasWidth, int canvasHeight)
         {
-            mazeWidth = Maze.difficultyLevel * 150;
+            mazeWidth = Maze.difficultyLevel * 200;
             mazeHeight = Maze.difficultyLevel * 100;
 
             mazeX = new int[mazeWidth];

@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 
 namespace Maze
 {
-    class MazeSolution : MazeTrail             //This class should create the maze solution and do other things, like display it on demand
-    {                                           //This class can inherit from the MazeTrails class because it's a trail, except it's the lone solution
+    class MazeSolution : MazeTrail
+    {
         public MazeSolution() : base()
         {
             solution = true;
         }
 
+        //CreateMazeSolution makes the solution of the maze, which other trails then branch off of; the solution never goes left
+
         public void CreateMazeSolution(MazeSolution mazeSolution, MazePlatform mazePlatform)
         {
             Random rnd = new Random();
-            int yPoint = rnd.Next(50, (mazePlatform.mazeHeight - 50));
+            int yPoint = rnd.Next(250, (mazePlatform.mazeHeight - 250));
             int xPoint = 1;
             int priorDirection = RIGHT;
             bool initialCurve = true;
             bool keepGoing = true;
+            int curveLength = 0;
 
             mazeTrailList = new List<MazeTrail>();
 
@@ -33,22 +36,22 @@ namespace Maze
             {
                 if (initialCurve)
                 {
-                    int curveLength = getTrailLength();
+                    curveLength = 60;
 
-                    createTrail(xPoint, yPoint, RIGHT, curveLength, mazeSolution, mazePlatform);
+                    CreateTrail(xPoint, yPoint, RIGHT, curveLength, mazeSolution, mazePlatform);
                     DrawTrails(mazeSolution, mazePlatform);
                     xPoint += curveLength;
                     initialCurve = false;
                 }
-                else if (priorDirection == RIGHT || priorDirection == LEFT)
+                else if (priorDirection == RIGHT)
                 {
-                    int curveLength = getTrailLength();
-                    int direction = rnd.Next(1, 3);
+                    int direction = rnd.Next(UP, (DOWN + 1));
 
                     if (direction == DOWN)
                     {
+                        curveLength = GetTrailLength();
                         bool goDown = true;
-                        int _distanceToBorder = distanceToBorder(xPoint, yPoint, DOWN, mazePlatform);
+                        int _distanceToBorder = DistanceToBorder(xPoint, yPoint, DOWN, mazePlatform);
 
                         if (_distanceToBorder < curveLength + 20)
                         {
@@ -57,7 +60,7 @@ namespace Maze
 
                         if (goDown)
                         {
-                            createTrail(xPoint, yPoint, DOWN, curveLength, mazeSolution, mazePlatform);
+                            CreateTrail(xPoint, yPoint, DOWN, curveLength, mazeSolution, mazePlatform);
                             DrawTrails(mazeSolution, mazePlatform);
                             yPoint += curveLength;
                         }
@@ -66,8 +69,9 @@ namespace Maze
                     }
                     else if (direction == UP)
                     {
+                        curveLength = GetTrailLength();
                         bool goUp = true;
-                        int _distanceToBorder = distanceToBorder(xPoint, yPoint, UP, mazePlatform);
+                        int _distanceToBorder = DistanceToBorder(xPoint, yPoint, UP, mazePlatform);
 
                         if (_distanceToBorder < curveLength + 20)
                         {
@@ -76,7 +80,7 @@ namespace Maze
 
                         if (goUp)
                         {
-                            createTrail(xPoint, yPoint, UP, curveLength, mazeSolution, mazePlatform);
+                            CreateTrail(xPoint, yPoint, UP, curveLength, mazeSolution, mazePlatform);
                             DrawTrails(mazeSolution, mazePlatform);
                             yPoint -= curveLength;
                         }
@@ -86,18 +90,18 @@ namespace Maze
                 }
                 else if (priorDirection == DOWN || priorDirection == UP)
                 {
-                    int curveLength = getTrailLength();
-                    int distanceToBorder = MazeTrail.distanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
+                    curveLength = GetTrailLength();
+                    int distanceToBorder = DistanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
 
                     if (distanceToBorder <= curveLength + 20)
                     {
-                        createTrail(xPoint, yPoint, RIGHT, distanceToBorder, mazeSolution, mazePlatform);
+                        CreateTrail(xPoint, yPoint, RIGHT, distanceToBorder, mazeSolution, mazePlatform);
                         DrawTrails(mazeSolution, mazePlatform);
                         keepGoing = false;
                     }
                     else
                     {
-                        createTrail(xPoint, yPoint, RIGHT, curveLength, mazeSolution, mazePlatform);
+                        CreateTrail(xPoint, yPoint, RIGHT, curveLength, mazeSolution, mazePlatform);
                         DrawTrails(mazeSolution, mazePlatform);
                         xPoint += curveLength;
                         priorDirection = RIGHT;
@@ -113,19 +117,6 @@ namespace Maze
             mazeTrailList.Add(mazeSolution);
 
             CreateMazeDeadEnd(mazeTrailList, mazePlatform);
-
-            //for (int i = 0; i < mazeSolution.xPosition.Count; i++)
-            //{
-            //    if (mazeSolution.positionStatus[i] == OPENS_DOWN)
-            //    {
-            //        for (int x = 1; x < 10; x++)
-            //        {
-            //            mazePlatform.status[(mazeSolution.xPosition[i] - 5) + x, mazeSolution.yPosition[i] + 5] = TRAIL;
-            //        }                
-            //    }
-            //    i += 10;
-            //}
-
         }    
     }
 }
