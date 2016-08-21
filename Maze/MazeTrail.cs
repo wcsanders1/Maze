@@ -577,8 +577,8 @@ namespace Maze
                 int xPoint = 0;
                 int yPoint = 0;
                 int direction = 0;
-                int _distanceToBorder = 0;
-                int _distanceToTrail = 0;
+                int distanceToBorder = 0;
+                int distanceToTrail = 0;
                 int curveLength = 0;
                 bool goUp = false;
                 bool goDown = false;
@@ -602,10 +602,10 @@ namespace Maze
                         goUp = true;
                         keepGoing = true;
 
-                        _distanceToBorder = DistanceToBorder(xPoint, yPoint, UP, mazePlatform);
-                        _distanceToTrail = DistanceToTrail(xPoint, yPoint, UP, mazePlatform);
+                        distanceToBorder = DistanceToBorder(xPoint, yPoint, UP, mazePlatform);
+                        distanceToTrail = DistanceToTrail(xPoint, yPoint, UP, mazePlatform);
 
-                        if (_distanceToBorder < curveLength + 1 || _distanceToTrail < curveLength + 1)
+                        if (distanceToBorder < curveLength + 1 || distanceToTrail < curveLength + 1)
                         {
                             goUp = false;
                             keepGoing = false;
@@ -636,10 +636,10 @@ namespace Maze
                         goDown = true;
                         keepGoing = true;
 
-                        _distanceToBorder = DistanceToBorder(xPoint, yPoint, DOWN, mazePlatform);
-                        _distanceToTrail = DistanceToTrail(xPoint, yPoint, DOWN, mazePlatform);
+                        distanceToBorder = DistanceToBorder(xPoint, yPoint, DOWN, mazePlatform);
+                        distanceToTrail = DistanceToTrail(xPoint, yPoint, DOWN, mazePlatform);
 
-                        if (_distanceToBorder < curveLength + 1 || _distanceToTrail < curveLength + 1)
+                        if (distanceToBorder < curveLength + 1 || distanceToTrail < curveLength + 1)
                         {
                             goDown = false;
                             keepGoing = false;
@@ -677,10 +677,10 @@ namespace Maze
                         goRight = true;
                         keepGoing = true;
 
-                        _distanceToBorder = DistanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
-                        _distanceToTrail = DistanceToTrail(xPoint, yPoint, RIGHT, mazePlatform);
+                        distanceToBorder = DistanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
+                        distanceToTrail = DistanceToTrail(xPoint, yPoint, RIGHT, mazePlatform);
 
-                        if (_distanceToBorder < curveLength + 1 || _distanceToTrail < curveLength + 1)
+                        if (distanceToBorder < curveLength + 1 || distanceToTrail < curveLength + 1)
                         {
                             goRight = false;
                             keepGoing = false;
@@ -718,10 +718,10 @@ namespace Maze
                         goLeft = true;
                         keepGoing = true;
 
-                        _distanceToBorder = DistanceToBorder(xPoint, yPoint, LEFT, mazePlatform);
-                        _distanceToTrail = DistanceToTrail(xPoint, yPoint, LEFT, mazePlatform);
+                        distanceToBorder = DistanceToBorder(xPoint, yPoint, LEFT, mazePlatform);
+                        distanceToTrail = DistanceToTrail(xPoint, yPoint, LEFT, mazePlatform);
 
-                        if (_distanceToBorder < curveLength + 1 || _distanceToTrail < curveLength + 1)
+                        if (distanceToBorder < curveLength + 1 || distanceToTrail < curveLength + 1)
                         {
                             goLeft = false;
                             keepGoing = false;
@@ -753,10 +753,10 @@ namespace Maze
 
                             if (direction == RIGHT)
                             {
-                                _distanceToBorder = DistanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
-                                _distanceToTrail = DistanceToTrail(xPoint, yPoint, RIGHT, mazePlatform);
+                                distanceToBorder = DistanceToBorder(xPoint, yPoint, RIGHT, mazePlatform);
+                                distanceToTrail = DistanceToTrail(xPoint, yPoint, RIGHT, mazePlatform);
 
-                                if (_distanceToBorder <= curveLength + 1 || _distanceToTrail <= curveLength + 1)
+                                if (distanceToBorder <= curveLength + 1 || distanceToTrail <= curveLength + 1)
                                 {
                                     keepGoing = false;
                                     CloseDeadEnd(xPoint, yPoint, priorDirection, mazePlatform);
@@ -771,10 +771,10 @@ namespace Maze
                             }
                             if (direction == LEFT)
                             {
-                                _distanceToBorder = DistanceToBorder(xPoint, yPoint, LEFT, mazePlatform);
-                                _distanceToTrail = DistanceToTrail(xPoint, yPoint, LEFT, mazePlatform);
+                                distanceToBorder = DistanceToBorder(xPoint, yPoint, LEFT, mazePlatform);
+                                distanceToTrail = DistanceToTrail(xPoint, yPoint, LEFT, mazePlatform);
 
-                                if (_distanceToBorder <= curveLength + 1 || _distanceToTrail <= curveLength + 1)
+                                if (distanceToBorder <= curveLength + 1 || distanceToTrail <= curveLength + 1)
                                 {
                                     keepGoing = false;
                                     CloseDeadEnd(xPoint, yPoint, priorDirection, mazePlatform);
@@ -797,10 +797,10 @@ namespace Maze
                             if (direction == DOWN)
                             {
                                 goDown = true;
-                                _distanceToBorder = DistanceToBorder((xPoint - halfTrailWidth), yPoint, DOWN, mazePlatform);
-                                _distanceToTrail = DistanceToTrail(xPoint, yPoint, DOWN, mazePlatform);
+                                distanceToBorder = DistanceToBorder((xPoint - halfTrailWidth), yPoint, DOWN, mazePlatform);
+                                distanceToTrail = DistanceToTrail(xPoint, yPoint, DOWN, mazePlatform);
 
-                                if (_distanceToBorder < curveLength + 1 || _distanceToTrail <= curveLength + 1)
+                                if (distanceToBorder < curveLength + 1 || distanceToTrail <= curveLength + 1)
                                 {
                                     keepGoing = false;
                                     goDown = false;
@@ -819,10 +819,10 @@ namespace Maze
                             else if (direction == UP)
                             {
                                 goUp = true;
-                                _distanceToBorder = DistanceToBorder(xPoint, yPoint, UP, mazePlatform);
-                                _distanceToTrail = DistanceToTrail(xPoint, yPoint, UP, mazePlatform);
+                                distanceToBorder = DistanceToBorder(xPoint, yPoint, UP, mazePlatform);
+                                distanceToTrail = DistanceToTrail(xPoint, yPoint, UP, mazePlatform);
 
-                                if (_distanceToBorder < curveLength + 1 || _distanceToTrail <= curveLength + 1)
+                                if (distanceToBorder < curveLength + 1 || distanceToTrail <= curveLength + 1)
                                 {
                                     keepGoing = false;
                                     goUp = false;
