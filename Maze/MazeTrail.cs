@@ -24,7 +24,7 @@ namespace Maze
         public const int OPENS_RIGHT = MazePlatform.OPENS_RIGHT;
         public const int OPENS_LEFT = MazePlatform.OPENS_LEFT;
 
-        public int trailWidth = 6;            // These four variables are used to draw the borders around the trails
+        public int trailWidth = 6;              // These four variables are used to draw the borders around the trails
         public int halfTrailWidth = 0;
         public int trailBuffer = 0;
         public int trailBorderWidth = 0;
@@ -33,7 +33,7 @@ namespace Maze
 
         public bool recurse = false;
 
-        public List<int> xPosition = null;    //These lists contain maze trails and allow the trails to detect each other so they don't collide
+        public List<int> xPosition = null;      //These lists contain maze trails and allow the trails to detect each other so they don't collide
         public List<int> yPosition = null;
         public List<int> trailDirection = null;
         public List<int> positionStatus = null;
@@ -58,14 +58,7 @@ namespace Maze
         {
             Random rnd = new Random();
 
-            //if (rnd.Next(1, 10) <= 6)
-            //{
-                return rnd.Next(28, 33);
-            //}
-            //else
-            //{
-            //    return rnd.Next(20, 30);
-            //}
+            return rnd.Next(28, 33);
         }
 
         // CreateTrail adds trail to a list that is a trail; the list allows trails to see each other so they don't run into each other and so the method CreateDeadEnd, below,
@@ -107,7 +100,7 @@ namespace Maze
             return distance;  
         }
 
-        //DistanceToTrail returns an int that's equal to the number of pixels separating one point from another trail in a given direction
+        //DistanceToTrail returns an int that's equal to the number of pixels separating one point from another trail's border in a given direction
 
         public int DistanceToTrail(int x, int y, int direction, MazePlatform mazePlatform)
         {
@@ -503,7 +496,7 @@ namespace Maze
 
             mazeTrailList = new List<MazeTrail>();
 
-            foreach (MazeTrail trail in mazeTrail)
+            foreach (MazeTrail trail in mazeTrail)          // This loop puts openings in the trails in the list
             {
                 stepsInSameDirection = 0;
                 priorDirection = trail.trailDirection[1];
@@ -516,54 +509,49 @@ namespace Maze
 
                         if (stepsInSameDirection == 15)
                         {
-                            if (true)  //rnd.Next(10) < 5: This makes a trail opening on a curve 50% of the time
+                            if (trail.trailDirection[i] == LEFT || trail.trailDirection[i] == RIGHT)
                             {
-                                if (trail.trailDirection[i] == LEFT || trail.trailDirection[i] == RIGHT)
+                                for (int x = 0; x < halfTrailWidth; x++)
                                 {
-                                    for (int x = 0; x < halfTrailWidth; x++)
-                                    {
-                                        mazePlatform.status[((trail.xPosition[i] - x)), (trail.yPosition[i])] = OPENS_UP;
-                                        trail.positionStatus[(i - x)] = OPENS_UP;
-                                    }
-
-                                    for (int x = 0; x < trailWidth; x++)
-                                    {
-                                        mazePlatform.status[((trail.xPosition[i] - trailWidth)), (trail.yPosition[i])] = OPENS_DOWN;
-                                        trail.positionStatus[(i - x) - halfTrailWidth] = OPENS_DOWN;
-                                    }
-
-
+                                    mazePlatform.status[((trail.xPosition[i] - x)), (trail.yPosition[i])] = OPENS_UP;
+                                    trail.positionStatus[(i - x)] = OPENS_UP;
                                 }
-                                else if (trail.trailDirection[i] == DOWN)
+
+                                for (int x = 0; x < trailWidth; x++)
                                 {
-                                    for (int y = 0; y < trailWidth; y++)
+                                    mazePlatform.status[((trail.xPosition[i] - trailWidth)), (trail.yPosition[i])] = OPENS_DOWN;
+                                    trail.positionStatus[(i - x) - halfTrailWidth] = OPENS_DOWN;
+                                }
+                            }
+                            else if (trail.trailDirection[i] == DOWN)
+                            {
+                                for (int y = 0; y < trailWidth; y++)
+                                {
+                                    mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y) - trailWidth] = OPENS_LEFT;
+                                    trail.positionStatus[(i - y) - halfTrailWidth] = OPENS_LEFT;
+                                }
+
+                                for (int y = 0; y < trailWidth; y++)
+                                {
+                                    mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y)] = OPENS_RIGHT;
+                                    trail.positionStatus[(i - y)] = OPENS_RIGHT;
+                                }
+                            }
+                            else if (trail.trailDirection[i] == UP)
+                            {
+                                for (int y = 0; y < trailWidth; y++)
+                                {
+                                    if (trail.yPosition[i] > 22)
                                     {
                                         mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y) - trailWidth] = OPENS_LEFT;
                                         trail.positionStatus[(i - y) - halfTrailWidth] = OPENS_LEFT;
                                     }
-
-                                    for (int y = 0; y < trailWidth; y++)
-                                    {
-                                        mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y)] = OPENS_RIGHT;
-                                        trail.positionStatus[(i - y)] = OPENS_RIGHT;
-                                    }
                                 }
-                                else if (trail.trailDirection[i] == UP)
-                                {
-                                    for (int y = 0; y < trailWidth; y++)
-                                    {
-                                        if (trail.yPosition[i] > 22)
-                                        {
-                                            mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y) - trailWidth] = OPENS_LEFT;
-                                            trail.positionStatus[(i - y) - halfTrailWidth] = OPENS_LEFT;
-                                        }
-                                    }
 
-                                    for (int y = 0; y < trailWidth; y++)
-                                    {
-                                        mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y)] = OPENS_RIGHT;
-                                        trail.positionStatus[(i - y)] = OPENS_RIGHT;
-                                    }
+                                for (int y = 0; y < trailWidth; y++)
+                                {
+                                    mazePlatform.status[(trail.xPosition[i]), (trail.yPosition[i] - y)] = OPENS_RIGHT;
+                                    trail.positionStatus[(i - y)] = OPENS_RIGHT;
                                 }
                             }
                         }
@@ -584,10 +572,8 @@ namespace Maze
                 }
             }
 
-            //**********************************************************************************************************
-
-            foreach (MazeTrail trail in mazeTrail)
-            {
+            foreach (MazeTrail trail in mazeTrail)              //This loop makes trails off the openings made in the above loop and puts those trails into a new list,
+            {                                                   //which gets passed to this method
                 int xPoint = 0;
                 int yPoint = 0;
                 int direction = 0;
@@ -853,12 +839,9 @@ namespace Maze
                                 priorDirection = UP;
                             }
                         }
-
                     }
-                    
                 }
-            }
-       
+            }   
             if (recurse)
             {
                 CreateMazeDeadEnd(mazeTrailList, mazePlatform);

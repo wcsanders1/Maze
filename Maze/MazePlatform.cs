@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Maze
 {
-    public class MazePlatform   // This class contains functions that create the maze platform, initialize the status of the pixels on the platform, and create the maze borders
+    public class MazePlatform   // This class contains methods that create the maze platform, initialize the status of the pixels on the platform, and create the maze borders
     {
         public int mazeWidth = 0;
         public int mazeHeight = 0;
@@ -40,8 +40,8 @@ namespace Maze
 
         public void CreateMazePlatform(int canvasWidth, int canvasHeight)
         {
-            mazeWidth = Maze.difficultyLevel * 200;
-            mazeHeight = Maze.difficultyLevel * 100;
+            mazeWidth = Maze.DifficultyLevel * 200;
+            mazeHeight = Maze.DifficultyLevel * 100;
 
             mazeX = new int[mazeWidth];
             mazeY = new int[mazeHeight];
@@ -78,13 +78,13 @@ namespace Maze
         {
             for (int x = 0; x < mazeWidth; x++)
             {
-                status[x, 0] = BORDER;    //closes bottom border
-                status[x, (mazeHeight - 1)] = BORDER;  //closes top border
+                status[x, 0] = BORDER;                  //closes bottom border
+                status[x, (mazeHeight - 1)] = BORDER;   //closes top border
             }
             for (int y = 0; y < mazeHeight; y++)
             {
-                status[0, y] = BORDER;    //closes left border
-                status[(mazeWidth - 1), y] = BORDER;  //closes right border
+                status[0, y] = BORDER;                  //closes left border
+                status[(mazeWidth - 1), y] = BORDER;    //closes right border
             }
         }
     }

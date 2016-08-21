@@ -18,26 +18,36 @@ namespace Maze
 
         MazeSolution mazeSolution = null;
         MazePlatform mazePlatform = null;
-        MazeDeadEnd mazeDeadEnd = null;
 
+        public static int difficulty = 0;
 
-
-        public static int difficultyLevel = 0;
+        public static int DifficultyLevel
+        {
+            get
+            {
+                if (difficulty < 4 || difficulty > 7)
+                {
+                    return 7;
+                }
+                else
+                {
+                    return difficulty;
+                };
+            }
+        }
 
         public Maze()
         {
             InitializeComponent();
 
-            //difficultyLevel = int.Parse(difficulty_txt.Text);
-
-            //mazePlatform = new MazePlatform();
-            //mazeSolution = new MazeSolution();
-
-            //mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
-            //mazeSolution.CreateMazeSolution(mazeSolution, mazePlatform);
-
-            ////mazeSolution.DrawTrails(mazeSolution, mazePlatform);
-            //DrawMaze(mazePlatform);
+            try
+            {
+                difficulty = int.Parse(difficulty_txt.Text);
+            }
+            catch
+            {
+                difficulty = 7;
+            };
         }
 
         private void control_panel_Paint(object sender, PaintEventArgs e) // VS doesn't like it when I try to remove this
@@ -78,37 +88,40 @@ namespace Maze
 
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
-            difficultyLevel = int.Parse(difficulty_txt.Text);
-
             mazePlatform = new MazePlatform();
             mazeSolution = new MazeSolution();
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazeSolution.CreateMazeSolution(mazeSolution, mazePlatform);
 
-            //mazeSolution.DrawTrails(mazeSolution, mazePlatform);
             DrawMaze(mazePlatform);
         }
 
         private void go_button_Click(object sender, EventArgs e)
         {
-            difficultyLevel = int.Parse(difficulty_txt.Text);
+            try
+            {
+                difficulty = int.Parse(difficulty_txt.Text);
+            }
+            catch
+            {
+                difficulty = 7;
+            }
 
             mazePlatform = new MazePlatform();
             mazeSolution = new MazeSolution();
 
             mazePlatform.CreateMazePlatform(canvas.Width, canvas.Height);
             mazeSolution.CreateMazeSolution(mazeSolution, mazePlatform);
-            //mazeSolution.DrawTrails(mazeSolution, mazePlatform);
             canvas.Refresh();
         }
 
-        private void num_lines_Click(object sender, EventArgs e)
+        private void num_lines_Click(object sender, EventArgs e)  // VS won't let me remove this
         {
 
         }
 
-        private void Maze_Load(object sender, EventArgs e)
+        private void Maze_Load(object sender, EventArgs e)    // VS won't let me remove this
         {
 
         }
