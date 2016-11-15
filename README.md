@@ -1,2 +1,2 @@
 # Maze
-A program that makes a maze
+This program generates random mazes according to the level of difficulty the user enters.
